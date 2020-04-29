@@ -3,5 +3,6 @@
 
 int main() {
   System system;
+  // Displaying system monitor
   NCursesDisplay::Display(system);
 }
