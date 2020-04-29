@@ -127,7 +127,22 @@ long LinuxParser::Jiffies() {
 long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 
 // TODO: Read and return the number of active jiffies for the system
-long LinuxParser::ActiveJiffies() { return 0; }
+long LinuxParser::ActiveJiffies() {
+	string line;
+	string cpuType;
+	// Initializing vector
+	vector<long> cpujf = { 0, 0, 0, 0, 0, 0, 0 };
+	std::ifstream stream(kProcDirectory + kStatFilename);
+	if (stream.is_open()) {
+		std::getline(stream, line);
+		std::istringstream linestream(line);
+		linestream >> cpuType >> cpujf[0] >> cpujf[1] >> cpujf[2] >> cpujf[3] >> cpujf[4] >> cpujf[5] >> cpujf[6];
+		//std::cout << cpujf[0] << "\n";
+		//std::cout << cpujf[1] << "\n";
+	}
+	// Adding the values for all columns except 'Idle' and 'iowait'
+	return cpujf[0] + cpujf[1] + cpujf[2] + cpujf[5] + cpujf[6];
+}
 
 // DONE: Read and return the number of idle jiffies for the system
 long LinuxParser::IdleJiffies() {
@@ -150,11 +165,45 @@ long LinuxParser::IdleJiffies() {
 // TODO: Read and return CPU utilization
 vector<string> LinuxParser::CpuUtilization() { return {}; }
 
-// TODO: Read and return the total number of processes
-int LinuxParser::TotalProcesses() { return 0; }
+// DONE: Read and return the total number of processes
+int LinuxParser::TotalProcesses() {
+	string line;
+	string lineName;
+	int numberProcesses = 0;
+	bool lineNotFound = true;
+	std::ifstream stream(kProcDirectory + kStatFilename);
+	if (stream.is_open()) {
+		while (std::getline(stream, line) && lineNotFound) {
+			std::istringstream linestream(line);
+			linestream >> lineName >> numberProcesses;
+			//std::cout << lineName << "\n";
+			if (lineName.compare("processes") == 0) {
+				lineNotFound = false;
+			}
+		}
+	}
+	return numberProcesses;
+}
 
-// TODO: Read and return the number of running processes
-int LinuxParser::RunningProcesses() { return 0; }
+// DONE: Read and return the number of running processes
+int LinuxParser::RunningProcesses() {
+	string line;
+	string lineName;
+	int numberProcesses = 0;
+	bool lineNotFound = true;
+	std::ifstream stream(kProcDirectory + kStatFilename);
+	if (stream.is_open()) {
+		while (std::getline(stream, line) && lineNotFound) {
+			std::istringstream linestream(line);
+			linestream >> lineName >> numberProcesses;
+			//std::cout << lineName << "\n";
+			if (lineName.compare("procs_running") == 0) {
+				lineNotFound = false;
+			}
+		}
+	}
+	return numberProcesses;
+}
 
 // TODO: Read and return the command associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
