@@ -205,9 +205,17 @@ int LinuxParser::RunningProcesses() {
 	return numberProcesses;
 }
 
-// TODO: Read and return the command associated with a process
-// REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Command(int pid[[maybe_unused]]) { return string(); }
+// DONE: Read and return the command associated with a process
+string LinuxParser::Command(int pid) {
+	string processID = to_string(pid);
+	string filePath = "/proc/" + processID + "/cmdline";
+	string line;
+	std::ifstream stream(filePath);
+	if (stream.is_open()) {
+		std::getline(stream, line);
+	}
+	return line;
+}
 
 // TODO: Read and return the memory used by a process
 // REMOVE: [[maybe_unused]] once you define the function
@@ -221,6 +229,19 @@ string LinuxParser::Uid(int pid[[maybe_unused]]) { return string(); }
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::User(int pid[[maybe_unused]]) { return string(); }
 
-// TODO: Read and return the uptime of a process
-// REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::UpTime(int pid[[maybe_unused]]) { return 0; }
+// DONE: Read and return the uptime of a process
+long LinuxParser::UpTime(int pid) {
+	string processID = to_string(pid);
+	string filePath = "/proc/" + processID + "/stat";
+	string line;
+	// If it looks stupid, but works, then it is not stupid! :-)
+	string v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22;
+	std::ifstream stream(filePath);
+	if (stream.is_open()) {
+		std::getline(stream, line);
+		std::istringstream linestream(line);
+		linestream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8 >> v9 >> v10 >> v11 >> v12 >> v13 >> v14 >> v15 >> v16 >> v17 >> v18 >> v19 >> v20 >> v21 >> v22;
+	}
+	long returnValue = std::stol(v22);
+	return returnValue;
+}
