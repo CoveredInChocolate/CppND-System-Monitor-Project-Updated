@@ -126,7 +126,7 @@ long LinuxParser::Jiffies() {
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 
-// TODO: Read and return the number of active jiffies for the system
+// DONE: Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() {
 	string line;
 	string cpuType;
@@ -221,9 +221,27 @@ string LinuxParser::Command(int pid) {
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Ram(int pid[[maybe_unused]]) { return string(); }
 
-// TODO: Read and return the user ID associated with a process
-// REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Uid(int pid[[maybe_unused]]) { return string(); }
+// DONE: Read and return the user ID associated with a process
+string LinuxParser::Uid(int pid) {
+	string processID = to_string(pid);
+	string filePath = "/proc/" + processID + "/status";
+	string line;
+	bool needToSearch = true;
+	string lineName, userid;
+	std::ifstream stream(filePath);
+	if (stream.is_open()) {
+		while (needToSearch) {
+			std::getline(stream, line);
+			std::istringstream linestream(line);
+			linestream >> lineName >> userid;
+			//std::cout << lineName << "\n";
+			if (lineName.compare("Uid:") == 0) {
+				needToSearch = false;
+			}
+		}
+	}
+	return userid;
+}
 
 // TODO: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
