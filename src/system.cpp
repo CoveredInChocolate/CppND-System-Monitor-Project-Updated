@@ -27,20 +27,24 @@ float System::MemoryUtilization() { return 0.0; }
 
 // TODO: Return the operating system name
 std::string System::OperatingSystem() {
-	return LinuxParser::OperatingSystem();
+	//return LinuxParser::OperatingSystem();
+	return "SindreTest-22";
 }
 
 // DONE: Return the number of processes actively running on the system
 int System::RunningProcesses() {
-	return LinuxParser::RunningProcesses();
+	//return LinuxParser::RunningProcesses();
+	return 200;
 }
 
 // DONE: Return the total number of processes on the system
 int System::TotalProcesses() {
-	return LinuxParser::TotalProcesses();
+	//return LinuxParser::TotalProcesses();
+	return 500;
 }
 
 // DONE: Return the number of seconds since the system started running
 long int System::UpTime() {
-	return LinuxParser::UpTime();
+	//return LinuxParser::UpTime();
+	return 2000;
 }
