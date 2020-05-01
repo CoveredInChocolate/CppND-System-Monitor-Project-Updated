@@ -83,8 +83,8 @@ float LinuxParser::MemoryUtilization() {
 		}
 	}
 	// Using the following formula:
-	// Total used memory = MemTotal - MemFree
-	return memKB[0] - memKB[1];
+	// Total used memory = (MemTotal - MemFree)/MemTotal
+	return (memKB[0] - memKB[1])/memKB[0];
 }
 
 // DONE: Read and return the system uptime
