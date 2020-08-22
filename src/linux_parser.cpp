@@ -100,8 +100,9 @@ long LinuxParser::UpTime() {
 		//std::cout << activeTime << "\n";
 		//std::cout << idleTime << "\n";
 	}
-	// Adding floats and returning long which rounds them nicely
-	return activeTime + idleTime;
+	// Only need to return the active time
+  long returnActiveTime = activeTime;
+	return returnActiveTime;
 }
 
 // DONE: Read and return the number of jiffies for the system
