@@ -15,7 +15,6 @@ using std::string;
 using std::vector;
 
 // TODO: Return the system's CPU
-// Test dummy variable - test2
 Processor& System::Cpu() { return cpu_; }
 
 // TODO: Return a container composed of the system's processes
