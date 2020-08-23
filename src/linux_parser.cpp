@@ -221,7 +221,7 @@ string LinuxParser::Command(int pid) {
 }
 
 // DONE: Read and return the memory used by a process
-string LinuxParser::Ram(int pid[[maybe_unused]]) {
+string LinuxParser::Ram(int pid) {
 	string processID = to_string(pid);
 	string filePath = "/proc/" + processID + "/status";
 	string line;

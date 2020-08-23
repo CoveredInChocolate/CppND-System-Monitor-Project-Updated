@@ -14,20 +14,23 @@ using std::vector;
 // Adding a constructor
 Process::Process(int pid):pid_(pid){}
 
-// TODO: Return this process's ID
+// DONE: Return this process's ID
 int Process::Pid() { return pid_; }
 
 // TODO: Return this process's CPU utilization
 float Process::CpuUtilization() { return 0; }
 
-// TODO: Return the command that generated this process
+// DONE: Return the command that generated this process
 string Process::Command() {
   string cmd = LinuxParser::Command(Pid());
   return cmd;
 }
 
 // TODO: Return this process's memory utilization
-string Process::Ram() { return string(); }
+string Process::Ram() {
+  string memUsage = LinuxParser::Ram(Pid());
+  return memUsage;
+}
 
 // TODO: Return the user (name) that generated this process
 string Process::User() { return string(); }
