@@ -36,7 +36,7 @@ string Process::Ram() {
 string Process::User() {
   // Need to call User with id in User-function
   // string userID = LinuxParser::Uid(Pid());
-  string username LinuxParser::User();
+  string username = LinuxParser::User(Pid());
   return username;
 }
 
