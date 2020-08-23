@@ -271,8 +271,32 @@ string LinuxParser::Uid(int pid) {
 // TODO: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::User(int pid) {
-  string userName = "TOFIX2";
-  return userName;
+  string line, uname, uid;
+	string userIdToFind = LinuxParser::Uid(pid);
+	string filename = "/etc/passwd";
+	bool lineNotFound = true;
+  std::ifstream stream(filename);
+	if (stream.is_open()) {
+		while (std::getline(stream, line) && lineNotFound) {
+  			std::istringstream linestream(line);
+				vector<int> colons = {0, 0, 0, 0, 0, 0};
+				int colonNumber = 0;
+				for (int i = 0; i < line.size(); i++) {
+					if (line[i] == ':') {
+						colons[colonNumber] = i;
+						colonNumber = colonNumber + 1;
+					}
+				}
+				uname = line.substr(0, colons[0]);
+				uid = line.substr(colons[1]+1, colons[2] - colons[1] - 1);
+
+				if (uid == userIdToFind) {
+					lineNotFound = false;
+				}
+      }
+    }
+		std::cout << "Username: " << uname << "\n";
+  return uname;
 }
 
 // DONE: Read and return the uptime of a process
