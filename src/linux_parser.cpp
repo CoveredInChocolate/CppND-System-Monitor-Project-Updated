@@ -281,7 +281,7 @@ string LinuxParser::User(int pid) {
   			std::istringstream linestream(line);
 				vector<int> colons = {0, 0, 0, 0, 0, 0};
 				int colonNumber = 0;
-				for (int i = 0; i < line.size(); i++) {
+				for (unsigned int i = 0; i < line.size(); i++) {
 					if (line[i] == ':') {
 						colons[colonNumber] = i;
 						colonNumber = colonNumber + 1;
