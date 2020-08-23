@@ -15,9 +15,19 @@ string Format::ElapsedTime(long seconds) {
 	int secsWithoutHours = seconds - (hrs * 3600);
 	int mins = secsWithoutHours / 60;
 	int secs = secsWithoutHours - (mins * 60);
-	returnTime = to_string(hrs) + ":" + to_string(mins) + ":" + to_string(secs);
-	if (hrs < 10) {
-		returnTime = "0" + returnTime;
+	string hrsText, minsText, secsText;
+	secsText = to_string(secs);
+	minsText = to_string(mins);
+	hrsText = to_string(hrs);
+	if (secs < 10) {
+		secsText = "0" + secsText;
 	}
+	if (mins < 10) {
+		minsText = "0" + minsText;
+	}
+	if (hrs < 10) {
+		hrsText = "0" + hrsText;
+	}
+	returnTime = hrsText + ":" + minsText + ":" + secsText;
 	return returnTime;
 }
