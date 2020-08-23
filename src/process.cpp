@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "process.h"
+#include "linux_parser.h" //Added so LinuxParser:: works
 
 using std::string;
 using std::to_string;
@@ -21,7 +22,7 @@ float Process::CpuUtilization() { return 0; }
 
 // TODO: Return the command that generated this process
 string Process::Command() {
-  string cmd = LinuxParser::Command(_pid);
+  string cmd = LinuxParser::Command(Pid());
   return cmd;
 }
 
