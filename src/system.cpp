@@ -14,6 +14,15 @@ using std::size_t;
 using std::string;
 using std::vector;
 
+// Populating processes_
+System::System() {
+	vector<int> procPids = LinuxParser::Pids();
+		for (int i = 0; i < procPids.size(); i++) {
+			//std::cout << "procPids[" << i << "]: " << procPids[i] << "\n";
+			processes_.push_back(Process(pid));
+		}
+}
+
 // DONE: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
 
