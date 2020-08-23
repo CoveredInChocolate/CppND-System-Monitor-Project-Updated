@@ -5,6 +5,8 @@
 float Processor::Utilization() {
 	long active = LinuxParser::ActiveJiffies();
 	long total = LinuxParser::Jiffies();
-	float percentageUsed = active/total;
+	float activeFloat = active;
+	float totalFloat = total;
+	float percentageUsed = activeFloat/totalFloat;
 	return percentageUsed;
 }
