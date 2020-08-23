@@ -18,7 +18,14 @@ Process::Process(int pid):pid_(pid){}
 int Process::Pid() { return pid_; }
 
 // TODO: Return this process's CPU utilization
-float Process::CpuUtilization() { return 0; }
+float Process::CpuUtilization() {
+  long active = LinuxParser::ActiveJiffies(Pid());
+	long total = LinuxParser::Jiffies();
+	float activeFloat = active;
+	float totalFloat = total;
+	float percentageUsed = activeFloat/totalFloat;
+	return percentageUsed;
+}
 
 // DONE: Return the command that generated this process
 string Process::Command() {
@@ -32,22 +39,20 @@ string Process::Ram() {
   return memUsage;
 }
 
-// TODO: Return the user (name) that generated this process
+// DONE: Return the user (name) that generated this process
 string Process::User() {
-  // Need to call User with id in User-function
-  // string userID = LinuxParser::Uid(Pid());
   string username = LinuxParser::User(Pid());
   return username;
 }
 
-// TODO: Return the age of this process (in seconds)
+// DONE: Return the age of this process (in seconds)
 long int Process::UpTime() {
   long timeSeconds = LinuxParser::UpTime(Pid());
   return timeSeconds;
 }
 
-// TODO: Overload the "less than" comparison operator for Process objects
-// REMOVE: [[maybe_unused]] once you define the function
+// DONE: Overload the "less than" comparison operator for Process objects
+// Solved this in a slightly different way
 //bool Process::operator<(Process const& a) const {
 bool Process::operator<(Process a) {
   int pid1 = Pid();
