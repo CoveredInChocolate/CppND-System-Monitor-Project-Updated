@@ -23,7 +23,7 @@ float Process::CpuUtilization() {
 	long total = LinuxParser::Jiffies();
 	float activeFloat = active;
 	float totalFloat = total;
-	float percentageUsed = activeFloat/totalFloat;
+	float percentageUsed = 100*activeFloat/totalFloat;
 	return percentageUsed;
 }
 
