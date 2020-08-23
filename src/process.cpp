@@ -32,8 +32,11 @@ string Process::Ram() {
   return memUsage;
 }
 
-// TODO: Return the user (name) that generated this process
-string Process::User() { return string(); }
+// DONE: Return the user (name) that generated this process
+string Process::User() {
+  string username = LinuxParser::Uid(Pid());
+  return username;
+}
 
 // TODO: Return the age of this process (in seconds)
 long int Process::UpTime() { return 0; }
