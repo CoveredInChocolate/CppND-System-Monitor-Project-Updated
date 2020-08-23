@@ -125,7 +125,7 @@ long LinuxParser::Jiffies() {
 
 // TODO: Read and return the number of active jiffies for a PID
 long LinuxParser::ActiveJiffies(int pid) {
-  /*
+
   string processID = to_string(pid);
 	string filePath = "/proc/" + processID + "/stat";
 	string line;
@@ -135,30 +135,17 @@ long LinuxParser::ActiveJiffies(int pid) {
 	if (stream.is_open()) {
 		std::getline(stream, line);
 		std::istringstream linestream(line);
-		linestream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8 >> v9 >> v10 >> v11 >> v12 >> v13 >> v14 >> v15 >> v16 >> v17 >> v18 >> v19 >> v20 >> v21 >> v22;
+		linestream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8 >> v9 >> v10 >> v11 >> v12 >> v13 >> v14 >> v15;
 	}
+  // Active jiffies based on following source;
+  // https://stackoverflow.com/questions/1420426/how-to-calculate-the-cpu-usage-of-a-process-by-pid-in-linux-from-c
+  //#14 utime - CPU time spent in user code, measured in clock ticks
+  //#15 stime - CPU time spent in kernel code, measured in clock ticks
 
-    //#14 utime - CPU time spent in user code, measured in clock ticks
-    //#15 stime - CPU time spent in kernel code, measured in clock ticks
-    //#16 cutime - Waited-for children's CPU time spent in user code (in clock ticks)
-    //#17 cstime - Waited-for children's CPU time spent in kernel code (in clock ticks)
-    //#22 starttime - Time when the process started, measured in clock ticks
+  long utime = stol(v14);
+  long stime = stol(v15);
 
-
-  // 14,15,16,17
-  int utime = stoi(v14);
-  int stime = stoi(v15);
-  int cutime = stoi(v16);
-  int cstime = stoi(v17);
-  int starttime = stoi(v22);
-
-  int total_time = total_time + cutime + cstime;
-  int seconds = uptime - (starttime / sysconf(_SC_CLK_TCK));
-  cpu_usage = 100 * ((total_time / Hertz) / seconds)
-
-	return returnValue;
-  */
-  return 0;
+	return utime + stime;
 }
 
 // DONE: Read and return the number of active jiffies for the system
