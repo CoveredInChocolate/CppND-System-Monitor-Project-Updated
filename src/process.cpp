@@ -46,7 +46,9 @@ long int Process::UpTime() { return 0; }
 // TODO: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const {
-  int v1 = std::stoi(Ram());
-  int v2 = std::stoi(a.Ram());
+  int pid1 = Pid();
+  int pid2 = a.Pid();
+  int v1 = LinuxParser::Ram(pid1);
+  int v2 = LinuxParser::Ram(pid2);
   return v1 > v2;
 }
