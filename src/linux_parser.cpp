@@ -270,7 +270,10 @@ string LinuxParser::Uid(int pid) {
 
 // TODO: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::User(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::User(int pid) {
+  string userName = "TOFIX2";
+  return userName;
+}
 
 // DONE: Read and return the uptime of a process
 long LinuxParser::UpTime(int pid) {
@@ -286,7 +289,7 @@ long LinuxParser::UpTime(int pid) {
 		linestream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8 >> v9 >> v10 >> v11 >> v12 >> v13 >> v14 >> v15 >> v16 >> v17 >> v18 >> v19 >> v20 >> v21 >> v22;
 	}
 	//long returnValue = std::stol(v22);
-	// Correcting from clock ticks to seconds
+	// Correcting from clock ticks to seconds (neither times look correct)
 	long returnValue = std::stol(v22)/sysconf(_SC_CLK_TCK);
 	return returnValue;
 }

@@ -34,9 +34,9 @@ string Process::Ram() {
 
 // TODO: Return the user (name) that generated this process
 string Process::User() {
-  string userID = LinuxParser::Uid(Pid());
-  // Need to call User with id
-  string username = "TOFIX";
+  // Need to call User with id in User-function
+  // string userID = LinuxParser::Uid(Pid());
+  string username LinuxParser::User();
   return username;
 }
 
