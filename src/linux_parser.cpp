@@ -295,7 +295,6 @@ string LinuxParser::User(int pid) {
 				}
       }
     }
-		std::cout << "Username: " << uname << "\n";
   return uname;
 }
 
