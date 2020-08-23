@@ -124,8 +124,42 @@ long LinuxParser::Jiffies() {
 }
 
 // TODO: Read and return the number of active jiffies for a PID
-// REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
+long LinuxParser::ActiveJiffies(int pid) {
+  /*
+  string processID = to_string(pid);
+	string filePath = "/proc/" + processID + "/stat";
+	string line;
+	// If it looks stupid, but works, then it is not stupid! :-)
+	string v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22;
+	std::ifstream stream(filePath);
+	if (stream.is_open()) {
+		std::getline(stream, line);
+		std::istringstream linestream(line);
+		linestream >> v1 >> v2 >> v3 >> v4 >> v5 >> v6 >> v7 >> v8 >> v9 >> v10 >> v11 >> v12 >> v13 >> v14 >> v15 >> v16 >> v17 >> v18 >> v19 >> v20 >> v21 >> v22;
+	}
+
+    //#14 utime - CPU time spent in user code, measured in clock ticks
+    //#15 stime - CPU time spent in kernel code, measured in clock ticks
+    //#16 cutime - Waited-for children's CPU time spent in user code (in clock ticks)
+    //#17 cstime - Waited-for children's CPU time spent in kernel code (in clock ticks)
+    //#22 starttime - Time when the process started, measured in clock ticks
+
+
+  // 14,15,16,17
+  int utime = stoi(v14);
+  int stime = stoi(v15);
+  int cutime = stoi(v16);
+  int cstime = stoi(v17);
+  int starttime = stoi(v22);
+
+  int total_time = total_time + cutime + cstime;
+  int seconds = uptime - (starttime / sysconf(_SC_CLK_TCK));
+  cpu_usage = 100 * ((total_time / Hertz) / seconds)
+
+	return returnValue;
+  */
+  return 0;
+}
 
 // DONE: Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() {
@@ -268,8 +302,7 @@ string LinuxParser::Uid(int pid) {
 	return userid;
 }
 
-// TODO: Read and return the user associated with a process
-// REMOVE: [[maybe_unused]] once you define the function
+// DONE: Read and return the user associated with a process
 string LinuxParser::User(int pid) {
   string line, uname, uid;
 	string userIdToFind = LinuxParser::Uid(pid);
@@ -300,6 +333,7 @@ string LinuxParser::User(int pid) {
 
 // DONE: Read and return the uptime of a process
 long LinuxParser::UpTime(int pid) {
+  long SystemUptime = LinuxParser::UpTime();
 	string processID = to_string(pid);
 	string filePath = "/proc/" + processID + "/stat";
 	string line;
@@ -313,6 +347,6 @@ long LinuxParser::UpTime(int pid) {
 	}
 	//long returnValue = std::stol(v22);
 	// Correcting from clock ticks to seconds (neither times look correct)
-	long returnValue = std::stol(v22)/sysconf(_SC_CLK_TCK);
+	long returnValue = SystemUptime - std::stol(v22)/sysconf(_SC_CLK_TCK);
 	return returnValue;
 }
